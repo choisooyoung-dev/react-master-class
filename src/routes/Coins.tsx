@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
 import { fetchCoins } from "../api";
 import { Helmet } from "react-helmet";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoon } from "@fortawesome/free-solid-svg-icons";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -55,6 +57,26 @@ const Img = styled.img`
   margin-right: 8px;
 `;
 
+const ToggleBtn = styled.span`
+  display: flex;
+  margin-left: auto;
+  cursor: pointer;
+  font-size: 20px;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: ${(props) => props.theme.accentColor};
+  color: ${(props) => props.theme.bgColor};
+  &:hover {
+    background-color: ${(props) => props.theme.bgColor};
+    color: ${(props) => props.theme.accentColor};
+  }
+`;
+
+const Icon = styled.span``;
+
 interface ICoin {
   id: string;
   name: string;
@@ -86,7 +108,13 @@ function Coins() {
       </Helmet>
       <Header>
         <Title>COIN</Title>
+        <ToggleBtn>
+          <Icon>
+            <FontAwesomeIcon icon={faMoon} />
+          </Icon>
+        </ToggleBtn>
       </Header>
+
       {isLoading ? (
         <Loader>Loading...</Loader>
       ) : (

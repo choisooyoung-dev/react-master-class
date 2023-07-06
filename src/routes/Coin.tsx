@@ -12,6 +12,8 @@ import Chart from "./Chart";
 import { useQuery } from "react-query";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
 import { Helmet } from "react-helmet";
+import { faHouse } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -77,6 +79,25 @@ const Tab = styled.span<{ isActive: boolean }>`
     props.isActive ? props.theme.accentColor : props.theme.textColor};
   a {
     display: block;
+  }
+`;
+
+const BackBtn = styled.button`
+  display: flex;
+  margin-left: auto;
+  cursor: pointer;
+  font-size: 20px;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: ${(props) => props.theme.accentColor};
+  color: ${(props) => props.theme.bgColor};
+  border: none;
+  &:hover {
+    background-color: ${(props) => props.theme.bgColor};
+    color: ${(props) => props.theme.accentColor};
   }
 `;
 
@@ -194,6 +215,15 @@ function Coin() {
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>
+        <BackBtn>
+          <Link
+            to={{
+              pathname: `/`,
+            }}
+          >
+            <FontAwesomeIcon icon={faHouse} />
+          </Link>
+        </BackBtn>
       </Header>
       {loading ? (
         <Loader>Loading...</Loader>
