@@ -21,19 +21,18 @@ function Chart({ coinId }: CharProps) {
   const { isLoading, data } = useQuery<IHistorical[]>(["ohlcv", coinId], () =>
     fetchCoinHistory(coinId)
   );
+  const mappedChartData = data?.map((price) => ({
+    x: price.time_close,
+    y: [price.open, price.high, price.low, price.close],
+  }));
   return (
     <div>
       {isLoading ? (
         "Loading Chart..."
       ) : (
         <ApexChart
-          type="line"
-          series={[
-            {
-              name: "Price",
-              data: data?.map((price) => Number(price.close)) as number[],
-            },
-          ]}
+          type="candlestick"
+          series={[{ data: mappedChartData }] as unknown as number[]}
           options={{
             theme: {
               mode: "dark",
@@ -41,41 +40,90 @@ function Chart({ coinId }: CharProps) {
             chart: {
               height: 500,
               width: 500,
+              toolbar: {
+                tools: {},
+              },
               background: "transparent",
             },
             grid: {
               show: false,
             },
-            stroke: {
-              curve: "smooth",
-              width: 5,
-            },
-            yaxis: {
-              show: false,
+            plotOptions: {
+              candlestick: {
+                wick: {
+                  useFillColor: true,
+                },
+              },
             },
             xaxis: {
+              labels: {
+                show: false,
+                datetimeFormatter: {
+                  month: "mmm 'yy",
+                },
+              },
               axisBorder: {
                 show: false,
               },
               axisTicks: {
                 show: false,
               },
-              labels: {
-                show: false,
-              },
-              type: "datetime",
-              categories: data?.map((price) => {
-                const date = new Date(price.time_close * 1000);
-                return date.toUTCString();
-              }),
             },
-            fill: {
-              type: "gradient",
-              gradient: { gradientToColors: ["#0be881"], stops: [0, 100] },
+            yaxis: {
+              show: false,
             },
-            colors: ["#0fbcf9"],
           }}
         />
+        // <ApexChart
+        //   type="line"
+        //   series={[
+        //     {
+        //       name: "Price",
+        //       data: data?.map((price) => Number(price.close)) as number[],
+        //     },
+        //   ]}
+        //   options={{
+        //     theme: {
+        //       mode: "dark",
+        //     },
+        //     chart: {
+        //       height: 500,
+        //       width: 500,
+        //       background: "transparent",
+        //     },
+        //     grid: {
+        //       show: false,
+        //     },
+        //     stroke: {
+        //       curve: "smooth",
+        //       width: 5,
+        //     },
+        //     yaxis: {
+        //       show: false,
+        //     },
+        //     xaxis: {
+        //       axisBorder: {
+        //         show: false,
+        //       },
+        //       axisTicks: {
+        //         show: false,
+        //       },
+        //       labels: {
+        //         show: false,
+        //       },
+        //       type: "datetime",
+        //       categories: data?.map((price) => {
+        //         const date = new Date(price.time_close * 1000);
+        //         return date.toUTCString();
+        //       }),
+        //     },
+        //     fill: {
+        //       type: "gradient",
+        //       gradient: { gradientToColors: ["#0be881"], stops: [0, 100] },
+        //     },
+        //     colors: ["#0fbcf9"],
+        //   }}
+        // />
       )}
     </div>
   );
