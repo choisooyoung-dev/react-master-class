@@ -71,9 +71,9 @@ function Chart({ coinId }: CharProps) {
             },
             fill: {
               type: "gradient",
-              gradient: { gradientToColors: ["blue"], stops: [0, 100] },
+              gradient: { gradientToColors: ["#0be881"], stops: [0, 100] },
             },
-            colors: ["red"],
+            colors: ["#0fbcf9"],
           }}
         />
       )}
