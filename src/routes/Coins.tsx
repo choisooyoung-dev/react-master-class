@@ -22,8 +22,8 @@ const Header = styled.header`
 const CoinList = styled.ul``;
 
 const Coin = styled.li`
-  background-color: white;
-  color: ${(props) => props.theme.bgColor};
+  background-color: rgba(0, 0, 0, 0.5);
+  color: ${(props) => props.theme.textColor};
   border-radius: 15px;
   margin-bottom: 10px;
 
@@ -32,11 +32,13 @@ const Coin = styled.li`
     display: flex;
     padding: 20px;
     align-items: center;
-    transition: color 0.2s ease-in;
+    transition: color 0.5s ease-in;
   }
   &:hover {
     a {
       color: ${(props) => props.theme.accentColor};
+      box-shadow: 0 10px 10px -5px rgba(35, 35, 35, 0.247);
+      transition: color 0.2s ease-in;
     }
   }
 `;

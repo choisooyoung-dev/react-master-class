@@ -41,7 +41,7 @@ function Chart({ coinId }: CharProps) {
               height: 500,
               width: 500,
               toolbar: {
-                tools: {},
+                show: false,
               },
               background: "transparent",
             },
