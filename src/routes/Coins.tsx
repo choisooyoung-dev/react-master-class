@@ -22,23 +22,22 @@ const Header = styled.header`
 const CoinList = styled.ul``;
 
 const Coin = styled.li`
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.listBgColor};
   color: ${(props) => props.theme.textColor};
+  font-weight: 500;
   border-radius: 15px;
   margin-bottom: 10px;
-
+  border: 1px solid white;
   /* Link component */
   a {
     display: flex;
     padding: 20px;
     align-items: center;
-    transition: color 0.5s ease-in;
+    transition: color 0.2s ease-in;
   }
   &:hover {
     a {
       color: ${(props) => props.theme.accentColor};
-      box-shadow: 0 10px 10px -5px rgba(35, 35, 35, 0.247);
-      transition: color 0.2s ease-in;
     }
   }
 `;
@@ -70,10 +69,11 @@ const ToggleBtn = styled.span`
   align-items: center;
   border-radius: 50%;
   background-color: ${(props) => props.theme.accentColor};
-  color: ${(props) => props.theme.bgColor};
+  color: ${(props) => props.theme.textColor};
   &:hover {
-    background-color: ${(props) => props.theme.bgColor};
+    background-color: ${(props) => props.theme.textColor};
     color: ${(props) => props.theme.accentColor};
+    transition: color 0.5s ease-in;
   }
 `;
 
@@ -89,7 +89,11 @@ interface ICoin {
   type: string;
 }
 
-function Coins() {
+interface ICoinsProps {
+  toggleDark: () => void;
+}
+
+function Coins({ toggleDark }: ICoinsProps) {
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
   /* 
   const [coins, setCoins] = useState<ICoin[]>([]);
@@ -110,7 +114,7 @@ function Coins() {
       </Helmet>
       <Header>
         <Title>COIN</Title>
-        <ToggleBtn>
+        <ToggleBtn onClick={toggleDark}>
           <Icon>
             <FontAwesomeIcon icon={faMoon} />
           </Icon>

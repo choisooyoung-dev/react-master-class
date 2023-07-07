@@ -98,6 +98,7 @@ const BackBtn = styled.button`
   &:hover {
     background-color: ${(props) => props.theme.bgColor};
     color: ${(props) => props.theme.accentColor};
+    transition: color 0.5s ease-in;
   }
 `;
 
@@ -165,7 +166,11 @@ interface PriceData {
   };
 }
 
-function Coin() {
+interface ICoinProps {
+  isDark: boolean;
+}
+
+function Coin({ isDark }: ICoinProps) {
   const { coinId } = useParams<RouterParams>();
   const { state } = useLocation<RouteState>();
   const priceMatch = useRouteMatch("/:coinId/price");
@@ -269,7 +274,7 @@ function Coin() {
               <Price coinId={coinId} />
             </Route>
             <Route path={`/:coinId/chart`}>
-              <Chart coinId={coinId} />
+              <Chart isDark={isDark} coinId={coinId} />
             </Route>
           </Switch>
         </>
